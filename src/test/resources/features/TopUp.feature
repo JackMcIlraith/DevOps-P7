@@ -40,12 +40,30 @@ Feature: TopUp Account
   Rule: The account balance shouldn't change if the topup payment request is rejected by the payment service
 
     #The scenarios below will need a payment service that accepts or rejects a request to add funds
-    Scenario: Payment service rejects the request
-#      Given Danny has a starting balance of <startBalance>
-#      And Danny selects his DebitCard as his topUp method
-#      When Danny now tops up by <topUpAmount>
-#      Then PaymentService rejects the request
-#      And The balance in his euro account should be <startBalance>
+    Scenario Outline: Payment service rejects the request
+      Given Danny has a starting balance of <startBalance>
+      And Danny selects his DebitCard as his topUp method
+      And Danny does not have enough money in his account to top up
+      When Danny now tries to to up by <topUpAmount>
+      Then The balance in his euro account should be <startBalance>
+
+      Examples:
+        | startBalance| topUpAmount |
+        | 0.0         | 100.0       |
+        | 14.0        | 20.0        |
+        | 23.0        | 30.0        |
 
 
     Scenario: Payment service accepts the request
+    Scenario Outline: Payment service accepts the request
+      Given Danny has a starting balance of <startBalance>
+      And Danny selects his DebitCard as his topUp method
+      And Danny does have enough money in his account to top up
+      When Danny now tries to to up by <topUpAmount>
+      Then The balance in his euro account should be <startBalance>
+
+      Examples:
+        | startBalance| topUpAmount |
+        | 0.0         | 100.0       |
+        | 14.0        | 20.0        |
+        | 23.0        | 30.0        |

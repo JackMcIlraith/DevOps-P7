@@ -19,7 +19,9 @@ public class Account {
         return this.balance;
     }
 
-    public void addFunds(double topUpAmount) {
-        this.balance += topUpAmount;
+    public void addFunds(double topUpAmount, boolean isTransactionSuccessful) {
+        if(isTransactionSuccessful) {
+            this.balance += topUpAmount;
+        }
     }
 }
