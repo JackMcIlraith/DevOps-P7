@@ -16,10 +16,11 @@ public class StepDefinitions {
     Person danny;
 
     @Before//Before hooks run before the first step in each scenario
-    public void setUp(){
+    public void setUp() {
         //We can use this to setup test data for each scenario
         danny = new Person("Danny");
     }
+
     @Given("Danny has {double} euro in his euro Revolut account")
     public void dannyHasEuroInHisEuroRevolutAccount(double startingBalance) {
         //System.out.println("Danny has starting account balance of: " + String.valueOf(startingBalance));
@@ -27,6 +28,13 @@ public class StepDefinitions {
         //double newAccountBalance = danny.getAccountBalance("EUR");
         //System.out.println("Danny's new account balance if: " + String.valueOf(newAccountBalance));
     }
+
+    @Given("Danny has a starting balance of {double}")
+    public void dannyHasAStartingBalanceOf(double startBalance){
+        System.out.println("Danny has starting account balance of: " + String.valueOf(startBalance));
+        danny.setAccountBalance(startBalance);
+    }
+
 
     @Given("Danny selects {double} euro as the topUp amount")
     public void danny_selects_euro_as_the_top_up_amount(double topUpAmount) {
@@ -44,6 +52,7 @@ public class StepDefinitions {
         topUpMethod = topUpSource;
     }
 
+
     @When("Danny tops up")
     public void danny_tops_up() {
         // Write code here that turns the phrase above into concrete actions
@@ -51,6 +60,15 @@ public class StepDefinitions {
         //throw new io.cucumber.java.PendingException();
     }
 
+    @When("Danny now tops up by {double}")
+    public void danny_tops_up_by(double topUpAmount) {
+        // Write code here that turns the phrase above into concrete actions
+        danny.getAccount("EUR").addFunds(topUpAmount);
+        //throw new io.cucumber.java.PendingException();
+    }
+
+//reusing same logic makes life easy
+    @Then("The balance in his euro account should be {double}")
     @Then("The new balance of his euro account should now be {double}")
     public void the_new_balance_of_his_euro_account_should_now_be(double newBalance) {
         // Write code here that turns the phrase above into concrete actions
@@ -60,7 +78,12 @@ public class StepDefinitions {
         //Act
         double actualResult = danny.getAccount("EUR").getBalance();
         //Assert
-        Assert.assertEquals(expectedResult, actualResult,0);
+        Assert.assertEquals(expectedResult, actualResult, 0);
         System.out.println("The new final balance is: " + actualResult);
     }
+
+
+
 }
+
+
