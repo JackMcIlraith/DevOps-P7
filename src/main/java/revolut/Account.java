@@ -24,4 +24,10 @@ public class Account {
             this.balance += topUpAmount;
         }
     }
+
+    public void removeFunds(double removeAmount, boolean isTransactionSuccessful) {
+        if(isTransactionSuccessful) {
+            this.balance -= removeAmount;
+        }
+    }
 }
