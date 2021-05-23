@@ -60,10 +60,10 @@ Feature: TopUp Account
       And Danny selects his DebitCard as his topUp method
       And Danny does have enough money in his account to top up
       When Danny now tries to to up by <topUpAmount>
-      Then The balance in his euro account should be <startBalance>
+      Then The balance in his euro account should be <newBalance>
 
       Examples:
-        | startBalance| topUpAmount |
-        | 0.0         | 100.0       |
-        | 14.0        | 20.0        |
-        | 23.0        | 30.0        |
+        | startBalance| topUpAmount | newBalance  |
+        | 0.0         | 100.0       | 100.0       |
+        | 14.0        | 20.0        | 34.0        |
+        | 23.0        | 30.0        | 53.0        |

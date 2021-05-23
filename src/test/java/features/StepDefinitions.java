@@ -14,13 +14,11 @@ public class StepDefinitions {
     //private String topUpMethod;
     PaymentService topUpMethod;
     Person danny;
-    PaymentService transactionService;
 
     @Before//Before hooks run before the first step in each scenario
     public void setUp() {
         //We can use this to setup test data for each scenario
         danny = new Person("Danny");
-        transactionService = new PaymentService("TestService");
     }
 
     @Given("Danny has {double} euro in his euro Revolut account")
@@ -38,7 +36,7 @@ public class StepDefinitions {
 
     @Given("Danny has a starting balance of {double}")
     public void dannyHasAStartingBalanceOf(double startBalance){
-        System.out.println("Danny has starting account balance of: " + String.valueOf(startBalance));
+        System.out.println("Danny has starting account balance of: " +(startBalance));
         danny.setAccountBalance(startBalance);
     }
 
@@ -69,22 +67,21 @@ public class StepDefinitions {
     @When("Danny tops up")
     public void danny_tops_up() {
         // Write code here that turns the phrase above into concrete actions
-        danny.getAccount("EUR").addFunds(topUpAmount, transactionService.isTransactionStatus());
+        danny.getAccount("EUR").addFunds(topUpAmount, topUpMethod.isTransactionStatus());
         //throw new io.cucumber.java.PendingException();
     }
 
     @When("Danny now tops up by {double}")
     public void danny_tops_up_by(double topUpAmount) {
         // Write code here that turns the phrase above into concrete actions
-        danny.getAccount("EUR").addFunds(topUpAmount, transactionService.isTransactionStatus());
+        danny.getAccount("EUR").addFunds(topUpAmount, topUpMethod.isTransactionStatus());
         //throw new io.cucumber.java.PendingException();
     }
 
     @When("Danny now tries to to up by {double}")
     public void danny_tries_to_top_up_by(double topUpAmount){
-        transactionService.transactionFail();
-        System.out.println("still keeping status? expect false: " + transactionService.isTransactionStatus());
-        danny.getAccount("EUR").addFunds(topUpAmount, transactionService.isTransactionStatus());
+        System.out.println("Transaction Status: " + topUpMethod.isTransactionStatus());
+        danny.getAccount("EUR").addFunds(topUpAmount, topUpMethod.isTransactionStatus());
     }
 
 //reusing same logic makes life easy
@@ -94,11 +91,10 @@ public class StepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         //throw new io.cucumber.java.PendingException();
         //Arrange
-        double expectedResult = newBalance;
         //Act
         double actualResult = danny.getAccount("EUR").getBalance();
         //Assert
-        Assert.assertEquals(expectedResult, actualResult, 0);
+        Assert.assertEquals(newBalance, actualResult, 0);
         System.out.println("The new final balance is: " + actualResult);
     }
 
