@@ -23,4 +23,10 @@ public class PaymentService {
     public boolean isTransactionStatus(){
         return transactionStatus;
     }
+
+    public void isTransactionSuccessful(double accountBalance, double transactionValue){
+        if(accountBalance >= transactionValue){
+            transactionSuccess();
+        } else transactionFail();
+    }
 }

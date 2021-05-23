@@ -1,4 +1,5 @@
 package revolut;
+import java.lang.Math;
 
 import java.util.Currency;
 
@@ -26,18 +27,33 @@ public class Crypto {
         }
     }
 
+    public void removeFunds(double removeAmount, boolean isTransactionSuccessful) {
+        if(isTransactionSuccessful) {
+            this.balance -= removeAmount;
+        }
+    }
+
     public void setExchangeRate(double rate) {
         this.exchangeRate = rate;
     }
 
     public void buyCryptoFromEuro(double amountToExchange, boolean isTransactionSuccessful) {
-        double amountInCrypto = amountToExchange / exchangeRate;
+        double amountInCrypto = amountToExchange * exchangeRate;
+        amountInCrypto*=1000000;
+        amountInCrypto = Math.round(amountInCrypto);
+        amountInCrypto/=1000000;
         addFunds(amountInCrypto,isTransactionSuccessful);
     }
 
     public double sellCryptoFromEuro(double amountOfCryptoToExchange, boolean isTransactionSuccessful) {
-        double amountInEuro = amountOfCryptoToExchange * exchangeRate;
-        addFunds((amountOfCryptoToExchange*-1),isTransactionSuccessful);
+        double amountInEuro = amountOfCryptoToExchange / exchangeRate;
+        System.out.println(amountOfCryptoToExchange + " bitcoin is worth: " + amountInEuro + " Euro");
+        amountInEuro*=100;
+        System.out.println("Still worth: " + amountInEuro);
+        amountInEuro = Math.round(amountInEuro);
+        amountInEuro/=100;
+        System.out.println("Still worth: " + amountInEuro);
+        removeFunds(amountOfCryptoToExchange,isTransactionSuccessful);
         return amountInEuro;
     }
 }
