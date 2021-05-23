@@ -17,6 +17,8 @@ public class CryptoStepDef {
     PaymentService internalExchange = new PaymentService("Internal Transactions");
     Person charles;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @Before
     public void setUp() {
         charles = new Person("Charles");
