@@ -33,7 +33,7 @@ Feature: Crypto Exchange
       | 101             | 101            | 1000                 | 0.000037     | 101         | 101           |
       | 100             | 101            | 100.1                | 0.000037     | 100         | 101           |
 
-  Scenario Outline: Add money to Bitcoin account using revolut account
+  Scenario Outline: Sell Bitcoin and deposit Euro into Eur Account - sufficient bitcoin
     Given Charles has <startingBalance> euro in his euro Revolut account
     And Charles has <startingCrypto> bitcoin in his bitcoin crypto Revolut account
     And Charles selects <exchangeAmountInBitcoin> bitcoin as the exchange amount
@@ -49,7 +49,7 @@ Feature: Crypto Exchange
       | 0               | 0              | 0                       | 0.000037     | 0           | 0             |
       | 0               | 10             | 10                      | 0.000037     | 270270.27   | 0             |
 
-  Scenario Outline: Add money to Bitcoin account using revolut account, but fails due to insufficient bitcoin
+  Scenario Outline: Sell Bitcoin and deposit Euro into Eur Account - insufficient bitcoin
     Given Charles has <startingBalance> euro in his euro Revolut account
     And Charles has <startingCrypto> bitcoin in his bitcoin crypto Revolut account
     And Charles selects <exchangeAmountInBitcoin> bitcoin as the exchange amount

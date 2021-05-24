@@ -80,16 +80,14 @@ public class CryptoStepDef {
     @When("Charles exchanges for euro")
     public void charlesExchangesForEuro() {
         System.out.println("we will now sell: " + exchangeValueBitcoin + " Bitcoin(s)");
-        //remove bitcoin and determine euro value from euro account
         double euroReceived = charles.getCryptoAccount("BTC").sellCryptoFromEuro(exchangeValueBitcoin, internalExchange.isTransactionStatus());
         System.out.println("The value exchanged was: " + euroReceived);
-        //add 100e to EUR account:
         charles.getAccount("EUR").addFunds(euroReceived, internalExchange.isTransactionStatus());
     }
 
     @And("Charles has sufficient funds in Euro")
     @And("Charles has insufficient funds in Euro Account, is rejected by payment service")
-    public void charlesHasInsufficientFundsIsRejectedByPaymentService() {
+    public void doesCharlesHaveSufficientFunds() {
         this.internalExchange.isTransactionSuccessful(charles.getAccount("EUR").getBalance(), exchangeValueEuro);
     }
 
